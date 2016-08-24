@@ -25,7 +25,7 @@ use Zend\View\Model\ViewModel;
 
 class Module
 {
-    const LOG_DIR = __DIR__ . "/../../../log";
+    const LOG_DIR = "log";
     const EVENT_LOG = "log";
 
     public function onBootstrap(MvcEvent $e)
