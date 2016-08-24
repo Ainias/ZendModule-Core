@@ -2,10 +2,11 @@
 
 namespace Ainias\Core;
 
+$lastNamespacePart = explode("\\", __NAMESPACE__)[1];
 return array(
     'doctrine' => array(
         'connection' => array(
-            __NAMESPACE__ => array(
+            $lastNamespacePart => array(
                 'wrapperClass' => 'Application\Connections\MyConnection',
                 'params' => array(
                     'dbname' => 'silas',
@@ -15,10 +16,10 @@ return array(
         'driver' => array(
             'orm_default' => array(
                 'drivers' => array(
-                    __NAMESPACE__.'\Model' => 'entities_'.__NAMESPACE__,
+                    __NAMESPACE__.'\Model' => 'entities_'.$lastNamespacePart,
                 ),
             ),
-            'entities_'.__NAMESPACE__ => array(
+            'entities_'.$lastNamespacePart => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => array(
@@ -27,11 +28,11 @@ return array(
             )
         ),
         'entitymanager' => array(
-            __NAMESPACE__ => array(
-                'connection' => __NAMESPACE__,
+            $lastNamespacePart => array(
+                'connection' => $lastNamespacePart,
             ),
             'orm_default' => [
-                'connection' => __NAMESPACE__,
+                'connection' => $lastNamespacePart,
             ],
         ),
     ),
