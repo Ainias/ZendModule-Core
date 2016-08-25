@@ -43,7 +43,13 @@ class DatabaseListener implements EventSubscriber
         $schemaName = $event->getClassMetadata()->getSchemaName();
         if ($schemaName == null) {
 
-            $dbName = trim(explode("\\", $event->getClassMetadata()->namespace)[0]);
+            $namespace = explode("\\", $event->getClassMetadata()->namespace)[0];
+            $dbName = trim($namespace[0]);
+            if ($dbName == "Ainias")
+            {
+                $dbName = trim($namespace[1]);
+            }
+
             if ($dbName == "") {
                 $dbName = "silas";
             } else {
