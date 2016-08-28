@@ -30,11 +30,15 @@ class Module
 
     public function onBootstrap(MvcEvent $e)
     {
+        $db = "silas";
+        $useStrict = false;
         $serviceLocator = $e->getApplication()->getServiceManager();
-        $dbConfig = $serviceLocator->get('config');
-        if (is_array($dbConfig) && isset($dbConfig["dbDefault"])) {
-            $dbConfig = $dbConfig["dbDefault"];
+        $config = $serviceLocator->get('config');
+        if (is_array($config) && isset($config["dbDefault"])) {
+            $dbConfig = $config["dbDefault"];
             MyConnection::setDefaults($dbConfig);
+            $db = $dbConfig["dbname"];
+            $useStrict = $dbConfig["useStrict"];
         }
 
         $eventManager = $e->getApplication()->getEventManager();
@@ -82,10 +86,11 @@ class Module
 
         $this->bootstrapSession($e);
 
+
         /** @var EntityManager $doctrineEntityManager */
         $doctrineEntityManager = $serviceLocator->get("doctrine.entitymanager.orm_default");
         $doctrineEventManager = $doctrineEntityManager->getEventManager();
-        $doctrineEventManager->addEventSubscriber(new DatabaseListener($doctrineEntityManager));
+        $doctrineEventManager->addEventSubscriber(new DatabaseListener($db, $useStrict));
     }
 
     public function dispatchError(MvcEvent $e)

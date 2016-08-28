@@ -18,44 +18,41 @@ use ReflectionClass;
 
 class DatabaseListener implements EventSubscriber
 {
-    /** @var null|AnnotationReader */
-    private static $annotationReader = null;
+    private $useStrict;
 
-    private function getAnnotationReader()
-    {
-        if (self::$annotationReader == null) {
-            self::$annotationReader = new AnnotationReader();
-        }
-        return self::$annotationReader;
-    }
+    private $prefix;
 
     public function getSubscribedEvents()
     {
         return Array(Events::loadClassMetadata);
     }
 
-    public function __construct(EntityManager $db)
+    public function __construct($prefix = 'silas', $useStrict = false)
     {
+        $this->useStrict = $useStrict;
+        $this->prefix = $prefix;
     }
 
     public function loadClassMetadata(LoadClassMetadataEventArgs $event)
     {
-        $schemaName = $event->getClassMetadata()->getSchemaName();
-        if ($schemaName == null) {
+        if ($this->useStrict == true) {
+            $event->getClassMetadata()->table["schema"] = $this->prefix;
+        } else {
+            $schemaName = $event->getClassMetadata()->getSchemaName();
+            if ($schemaName == null) {
+                $namespace = explode("\\", $event->getClassMetadata()->namespace);
+                $dbName = trim($namespace[0]);
+                if ($dbName == "Ainias") {
+                    $dbName = trim($namespace[1]);
+                }
 
-            $namespace = explode("\\", $event->getClassMetadata()->namespace);
-            $dbName = trim($namespace[0]);
-            if ($dbName == "Ainias")
-            {
-                $dbName = trim($namespace[1]);
+                if ($dbName == "") {
+                    $dbName = $this->prefix;
+                } else {
+                    $dbName = $this->prefix. '_' . $dbName;
+                }
+                $event->getClassMetadata()->table["schema"] = $dbName;
             }
-
-            if ($dbName == "") {
-                $dbName = "silas";
-            } else {
-                $dbName = "silas_" . $dbName;
-            }
-            $event->getClassMetadata()->table["schema"] = $dbName;
         }
     }
 }
