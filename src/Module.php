@@ -38,7 +38,7 @@ class Module
             $dbConfig = $config["dbDefault"];
             MyConnection::setDefaults($dbConfig);
             $db = $dbConfig["dbname"];
-            $useStrict = $dbConfig["useStrict"];
+            $useStrict = (isset($dbConfig["useStrict"]))?$dbConfig["useStrict"]:false;
         }
 
         $eventManager = $e->getApplication()->getEventManager();
@@ -85,7 +85,6 @@ class Module
         $eventManager->getSharedManager()->attach(AbstractActionController::class, MvcEvent::EVENT_DISPATCH_ERROR, array($this, 'dispatchError'), -1000);
 
         $this->bootstrapSession($e);
-
 
         /** @var EntityManager $doctrineEntityManager */
         $doctrineEntityManager = $serviceLocator->get("doctrine.entitymanager.orm_default");

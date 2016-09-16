@@ -146,6 +146,12 @@ class StandardManager
 		$this->repository->persist($entity, $flush);
 	}
 
+    public function merge($entity = null, $flush = true)
+    {
+        $entity = $this->selectCorrectEntity($entity);
+        $this->repository->merge($entity, $flush);
+    }
+
     public function emFlush($entity = NULL)
     {
         $this->repository->emFlush($entity);
