@@ -27,10 +27,10 @@ class FormatDatetimeGerman extends AbstractHelper
         return date($format, $dateTime->getTimestamp());
     }
 
-    public function dateLong(\DateTime $dateTime)
+    public function dateLong(\DateTime $dateTime, $fillerWeekday = "der")
     {
         return $this->getGermanDayOfWeek($dateTime, true)
-            .", der ".$dateTime->format("d")." "
+            .", ".$fillerWeekday." ".$dateTime->format("d").". "
             . $this->getGermanMonthName($dateTime, true). " "
             . $dateTime->format("Y");
     }
@@ -38,7 +38,7 @@ class FormatDatetimeGerman extends AbstractHelper
     public function dateMiddle(\DateTime $dateTime)
     {
         return $this->getGermanDayOfWeek($dateTime)
-        .", ".$dateTime->format("d")." "
+        .", ".$dateTime->format("d").". "
         . $this->getGermanMonthName($dateTime). ". "
         . $dateTime->format("Y");
     }
