@@ -9,6 +9,7 @@ use Ainias\Core\View\Form\FoundationFormHelper;
 use Ainias\Core\View\FormatDatetimeGerman;
 use Ainias\Core\View\NoJs;
 use Ainias\Core\View\NoTag;
+use Ainias\Core\View\PriceFormatter;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return array(
@@ -19,7 +20,8 @@ return array(
             FoundationFormHelper::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
             DatatablesHelper::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
             'navigation' => FoundationMenuHelperFactory::class,
-            FormatDatetimeGerman::class => InvokableFactory::class
+            FormatDatetimeGerman::class => InvokableFactory::class,
+            PriceFormatter::class => InvokableFactory::class,
 
         ),
         'aliases' => [
@@ -28,6 +30,7 @@ return array(
             'datatable' => DatatablesHelper::class,
             'foundationForm' => FoundationFormHelper::class,
             'formatGerman' => FormatDatetimeGerman::class,
+            'formatPrice' => PriceFormatter::class,
         ],
         'invokables' => [
             'form_element_errors' => FormElementErrors::class,
