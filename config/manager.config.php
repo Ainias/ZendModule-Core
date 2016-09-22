@@ -6,6 +6,7 @@ use Ainias\Core\Factory\View\FoundationMenuHelperFactory;
 use Ainias\Core\View\DatatablesHelper;
 use Ainias\Core\View\Form\FormElementErrors;
 use Ainias\Core\View\Form\FoundationFormHelper;
+use Ainias\Core\View\FormatDatetimeGerman;
 use Ainias\Core\View\NoJs;
 use Ainias\Core\View\NoTag;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -18,6 +19,7 @@ return array(
             FoundationFormHelper::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
             DatatablesHelper::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
             'navigation' => FoundationMenuHelperFactory::class,
+            FormatDatetimeGerman::class => InvokableFactory::class
 
         ),
         'aliases' => [
@@ -25,6 +27,7 @@ return array(
             'noTag' => NoTag::class,
             'datatable' => DatatablesHelper::class,
             'foundationForm' => FoundationFormHelper::class,
+            'formatGerman' => FormatDatetimeGerman::class,
         ],
         'invokables' => [
             'form_element_errors' => FormElementErrors::class,
