@@ -48,7 +48,7 @@ class DatatablesHelper extends AbstractHelper
 	{
 		$this->getView()->inlineScript()->appendFile($this->getView()->basePath() . '/3rdParty/Datatable/datatables.min.js');
 		$this->getView()->inlineScript()->appendFile($this->getView()->basePath() . '/js/myDatatable.js');
-		$this->getView()->headLink()->appendStylesheet($this->getView()->basePath() . "/3rdParty/Datatable3/datatables.min.css");
+		$this->getView()->headLink()->appendStylesheet($this->getView()->basePath() . "/3rdParty/Datatable/datatables.min.css");
 		$this->getView()->headLink()->appendStylesheet($this->getView()->basePath() . "/css/datatable.css");
 	}
 }
