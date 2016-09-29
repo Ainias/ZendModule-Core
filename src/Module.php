@@ -10,24 +10,12 @@ namespace Ainias\Core;
 use Ainias\Core\Connections\MyConnection;
 use Ainias\Core\Model\Doctrine\DatabaseListener;
 use Doctrine\ORM\EntityManager;
-use Zend\EventManager\Event;
-use Zend\Http\Response;
-use Zend\Log\Filter\Priority;
-use Zend\Log\Logger;
-use Zend\Log\Writer\ChromePhp;
-use Zend\Log\Writer\Stream;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Session\Container;
 use Zend\Session\SessionManager;
-use Zend\View\Model\ViewModel;
 
 class Module
 {
-    const LOG_DIR = "log";
-    const EVENT_LOG = "log";
-
     public function onBootstrap(MvcEvent $e)
     {
         $db = "silas";
