@@ -41,49 +41,6 @@ class Module
             $useStrict = (isset($dbConfig["useStrict"]))?$dbConfig["useStrict"]:false;
         }
 
-        $eventManager = $e->getApplication()->getEventManager();
-        $moduleRouteListener = new ModuleRouteListener();
-        $moduleRouteListener->attach($eventManager);
-
-        $logPath = realpath(self::LOG_DIR);
-        $logger = new Logger();
-        $catchAllWriter = new Stream($logPath . "/log.log");
-        $chromePhp = new ChromePhp();
-        $logger->addWriter($catchAllWriter);
-        $errorWriter = new Stream($logPath . "/error.log");
-        $errorWriter->addFilter(new Priority(Logger::ERR));
-        $logger->addWriter($errorWriter);
-        $errorLogger = new Logger();
-        $phpErrorWriter = new Stream($logPath . "/php_error.log");
-        $errorLogger->addWriter($catchAllWriter);
-        $errorLogger->addWriter($phpErrorWriter);
-        $errorLogger->addWriter($chromePhp);
-        Logger::registerErrorHandler($errorLogger);
-        Logger::registerFatalErrorShutdownFunction($errorLogger);
-
-        $exceptionLogger = new Logger();
-        $exceptionWriter = new Stream($logPath . "/php_exceptions.log");
-        $exceptionLogger->addWriter($catchAllWriter);
-        $exceptionLogger->addWriter($exceptionWriter);
-        $exceptionLogger->addWriter($chromePhp);
-        Logger::registerExceptionHandler($exceptionLogger);
-
-        $eventManager->getSharedManager()->attach('*', self::EVENT_LOG, function (Event $e) use ($logger) {
-            $params = $e->getParams();
-
-            if (isset($params["message"])) {
-                if (isset($params["level"]) && ($params["level"] == Logger::ALERT || $params["level"] == Logger::CRIT || $params["level"] == Logger::DEBUG || $params["level"] == Logger::EMERG || $params["level"] == Logger::ERR || $params["level"] == Logger::INFO || $params["level"] == Logger::NOTICE)) {
-                    $logLevel = $params["level"];
-                } else {
-                    $logLevel = Logger::INFO;
-                }
-                $logger->log($logLevel, $params["message"]);
-            }
-        });
-
-        $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, array($this, 'dispatchError'), -1000);
-        $eventManager->getSharedManager()->attach(AbstractActionController::class, MvcEvent::EVENT_DISPATCH_ERROR, array($this, 'dispatchError'), -1000);
-
         $this->bootstrapSession($e);
 
         /** @var EntityManager $doctrineEntityManager */
@@ -91,59 +48,6 @@ class Module
         $doctrineEventManager = $doctrineEntityManager->getEventManager();
         $doctrineEventManager->addEventSubscriber(new DatabaseListener($db, $useStrict));
     }
-
-    public function dispatchError(MvcEvent $e)
-    {
-        $response = $e->getApplication()->getResponse();
-        /** @var ViewModel $viewModel */
-        $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
-
-        $error = $e->getError();
-        /** @var \Exception $exception */
-        $exception = $e->getParam("exception");
-        if ($exception instanceof \Exception || $exception instanceof \Error) {
-            $error = $exception->getMessage() . " - ErrorCode: " . $exception->getCode() . " File: " . $exception->getFile() . " Line: " . $exception->getLine();
-        }
-        $e->getApplication()->getEventManager()->trigger(self::EVENT_LOG, null, array(
-            "message" => $error,
-            "level" => Logger::ERR
-        ));
-
-        if ($response instanceof Response) {
-            if ($response->isOk()) {
-                $errorTemplate = "error/index";
-            } else {
-                switch ($response->getStatusCode()) {
-                    case 401:
-                    case 403: {
-                        $errorTemplate = 'error/403';
-                        break;
-                    }
-                    case 404: {
-                        $errorTemplate = 'error/404';
-                        break;
-                    }
-                    default: {
-                        $errorTemplate = 'error/statusCode';
-                        $viewModel->statusCode = $response->getStatusCode();
-                        $viewModel->reasonPhrase = $response->getReasonPhrase();
-
-                        break;
-                    }
-                }
-            }
-            $child = new ViewModel();
-            $child->setTemplate($errorTemplate);
-            $viewModel->addChild($child);
-
-            $e->setViewModel($viewModel);
-            $e->stopPropagation(true);
-        } elseif ($response instanceof \Zend\Console\Response) {
-            //TODO error für Console
-            echo "ErrorLevel: " . $response->getErrorLevel() . PHP_EOL;
-        }
-    }
-
 
     public function getConfig()
     {
