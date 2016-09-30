@@ -10,6 +10,7 @@ namespace Ainias\Core;
 use Ainias\Core\Connections\MyConnection;
 use Ainias\Core\Model\Doctrine\DatabaseListener;
 use Doctrine\ORM\EntityManager;
+use Zend\Http\Request;
 use Zend\Mvc\MvcEvent;
 use Zend\Session\Container;
 use Zend\Session\SessionManager;
@@ -29,7 +30,10 @@ class Module
             $useStrict = (isset($dbConfig["useStrict"]))?$dbConfig["useStrict"]:false;
         }
 
-        $this->bootstrapSession($e);
+        if ($e->getRequest() instanceof Request)
+        {
+            $this->bootstrapSession($e);
+        }
 
         /** @var EntityManager $doctrineEntityManager */
         $doctrineEntityManager = $serviceLocator->get("doctrine.entitymanager.orm_default");
