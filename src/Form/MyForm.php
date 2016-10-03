@@ -71,7 +71,7 @@ abstract class MyForm extends Form{
     public function add($elementOrFieldset, array $flags = array())
     {
         if ($elementOrFieldset instanceof Element) {
-            if (!$elementOrFieldset->hasAttribute("required")) {
+            if (!$elementOrFieldset->hasAttribute("required") && !($elementOrFieldset instanceof Element\Checkbox)) {
                 $elementOrFieldset->setAttribute("required", "true");
             }
             if (!$elementOrFieldset->hasAttribute("id")) {
