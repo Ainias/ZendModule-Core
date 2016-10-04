@@ -41,7 +41,7 @@ class RouteColumn extends Column
 		foreach ($dynamicParams as $urlParam => $datatableFieldName) {
 			$params[$urlParam] = $row[$datatableFieldName];
 		}
-		$row[$this->getName()] .= $this->phpRenderer->url($this->getRouteName(), $params);
+		$row[$this->getName()] = $this->phpRenderer->url($this->getRouteName(), $params);
 		return parent::buildCell($row, $index);
 	}
 

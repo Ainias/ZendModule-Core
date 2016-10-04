@@ -10,8 +10,6 @@ namespace Ainias\Core\Datatable\Column;
 
 class ConditionRouteColumn extends RouteColumn
 {
-
-
     public function buildCell($row, $index)
     {
         if ($row[$this->getName()] == true)
