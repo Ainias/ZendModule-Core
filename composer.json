@@ -1,0 +1,41 @@
+{
+  "name": "ainias/zend-module-core",
+  "description": "Zend Framework 3 Module core",
+  "type": "library",
+  "keywords": [
+    "module",
+    "zf3"
+  ],
+  "authors": [
+    {
+      "name": "Ainias"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "zendframework/zend-router": "^3.0",
+    "zendframework/zend-navigation": "^2.8",
+    "zendframework/zend-mvc": "^3.0",
+    "zendframework/zend-mvc-plugin-flashmessenger": "^1.0",
+    "zendframework/zend-mvc-console": "^1.1",
+    "zendframework/zend-form": "^2.9",
+
+    "zendframework/zend-mime": "^2.6",
+    "zendframework/zend-mail": "^2.7",
+    "zendframework/zend-log": "^2.9",
+    "zendframework/zend-permissions-acl": "^2.6",
+    "zendframework/zend-i18n": "^2.7",
+    "doctrine/doctrine-module": "^1.2",
+    "doctrine/doctrine-orm-module": "^1.1"
+
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Ainias\\Core\\": "src/"
+    }
+  },
+  "repositories": [
+  ]
+}
