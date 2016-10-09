@@ -9,7 +9,7 @@ $lastNamespacePart = explode("\\", __NAMESPACE__)[1];
 return array(
     'doctrine' => array(
         'connection' => array(
-            $lastNamespacePart => array(
+            'default' => array(
                 'wrapperClass' => MyConnection::class,
                 'params' => array(
 //                    'dbname' => 'silas',
@@ -35,7 +35,7 @@ return array(
                 'connection' => $lastNamespacePart,
             ),
             'orm_default' => [
-                'connection' => $lastNamespacePart,
+                'connection' => 'default',
             ],
         ),
     ),
