@@ -12,7 +12,7 @@ return array(
             $lastNamespacePart => array(
                 'wrapperClass' => MyConnection::class,
                 'params' => array(
-                    'dbname' => 'silas',
+//                    'dbname' => 'silas',
                 )
             )
         ),
