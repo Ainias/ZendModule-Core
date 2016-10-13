@@ -19,10 +19,10 @@ return array(
         'driver' => array(
             'orm_default' => array(
                 'drivers' => array(
-                    __NAMESPACE__.'\Model' => 'entities_'.$lastNamespacePart,
+                    __NAMESPACE__.'\Model' => 'entities_default',
                 ),
             ),
-            'entities_'.$lastNamespacePart => array(
+            'entities_default' => array(
                 'class' => AnnotationDriver::class,
                 'cache' => 'array',
                 'paths' => array(
@@ -32,7 +32,7 @@ return array(
         ),
         'entitymanager' => array(
             $lastNamespacePart => array(
-                'connection' => $lastNamespacePart,
+                'connection' => 'default',
             ),
             'orm_default' => [
                 'connection' => 'default',
