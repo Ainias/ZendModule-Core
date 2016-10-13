@@ -18,9 +18,9 @@ return array(
         'factories' => array(
             'navigation' => \Zend\Navigation\Service\DefaultNavigationFactory::class,
 
-            'doctrine.entitymanager.' . $lastNamespacePart => new \DoctrineORMModule\Service\EntityManagerFactory($lastNamespacePart),
-            'doctrine.connection.' . $lastNamespacePart => new \DoctrineORMModule\Service\DBALConnectionFactory($lastNamespacePart),
-            'doctrine.configuration.' . $lastNamespacePart => new \DoctrineORMModule\Service\ConfigurationFactory($lastNamespacePart),
+//            'doctrine.entitymanager.orm_default' => new \DoctrineORMModule\Service\EntityManagerFactory($lastNamespacePart),
+//            'doctrine.connection.' . $lastNamespacePart => new \DoctrineORMModule\Service\DBALConnectionFactory($lastNamespacePart),
+//            'doctrine.configuration.' . $lastNamespacePart => new \DoctrineORMModule\Service\ConfigurationFactory($lastNamespacePart),
             SmtpMail::class => MailFactory::class
         ),
     ),
