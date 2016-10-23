@@ -27,16 +27,51 @@ class FormatDatetimeGerman extends AbstractHelper
         return date($format, $dateTime->getTimestamp());
     }
 
-    public function dateLong(\DateTime $dateTime, $fillerWeekday = "der")
+    private function getRelativeTime(\DateTime $dateTime)
     {
+        $nowDateTime = new \DateTime();
+        $now = $nowDateTime->format("Y-m-d");
+        $yesterday = $nowDateTime->modify("-1 Day")->format("Y-m-d");
+        $tomorrow = $nowDateTime->modify("+1 Day")->format("Y-m-d");
+
+        switch($dateTime->format("Y-d-m"))
+        {
+            case $now:
+            {
+                return "Heute";
+            }
+            case $yesterday:
+            {
+                return "Gestern";
+            }
+            case $tomorrow:
+            {
+                return "Morgen";
+            }
+        }
+        return null;
+    }
+
+    public function dateLong(\DateTime $dateTime, $fillerWeekday = "der", $useRelative = true)
+    {
+        $date = $this->getRelativeTime($dateTime);
+        if ($date != null)
+        {
+            return $date;
+        }
         return $this->getGermanDayOfWeek($dateTime, true)
             .", ".$fillerWeekday." ".$dateTime->format("d").". "
             . $this->getGermanMonthName($dateTime, true). " "
             . $dateTime->format("Y");
     }
 
-    public function dateMiddle(\DateTime $dateTime)
+    public function dateMiddle(\DateTime $dateTime, $useRelative = true)
     {
+        $date = $this->getRelativeTime($dateTime);
+        if ($date != null)
+        {
+            return $date;
+        }
         return $this->getGermanDayOfWeek($dateTime)
         .", ".$dateTime->format("d").". "
         . $this->getGermanMonthName($dateTime). ". "
