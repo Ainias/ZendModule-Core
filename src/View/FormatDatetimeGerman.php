@@ -33,7 +33,7 @@ class FormatDatetimeGerman extends AbstractHelper
         $yesterday = $nowDateTime->modify("-1 Day")->format("Y-m-d");
         $tomorrow = $nowDateTime->modify("+1 Day")->format("Y-m-d");
 
-        switch ($dateTime->format("Y-d-m")) {
+        switch ($dateTime->format("Y-m-d")) {
             case $now: {
                 return "Heute";
             }
