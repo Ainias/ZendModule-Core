@@ -157,10 +157,10 @@ class StandardManager
         $this->repository->emFlush($entity);
     }
 
-	public function removeEntity($entity = null)
+	public function removeEntity($entity = null, $flush = true)
 	{
 		$entity = $this->selectCorrectEntity($entity);
-		$this->repository->remove($entity);
+		$this->repository->remove($entity, $flush);
 	}
     public function findBy($args, $orderBy = null, $limit = null, $offset = null)
     {
