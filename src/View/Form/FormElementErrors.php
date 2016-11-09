@@ -16,7 +16,7 @@ class FormElementErrors extends OriginalFormElementErrors
 //    protected $messageSeparatorString = '</li><li class="input-error">';
 //    protected $messageCloseString     = '</li></ul>';
 
-    protected $messageOpenFormat      = '<small class = "form-error is-visible"%s>';
+    protected $messageOpenFormat      = '<small class = "form-error is-visible" %s>';
     protected $messageSeparatorString = '<br/>';
     protected $messageCloseString     = '</small>';
 }

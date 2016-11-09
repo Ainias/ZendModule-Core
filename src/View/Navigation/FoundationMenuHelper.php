@@ -8,17 +8,10 @@
 
 namespace Ainias\Core\View\Navigation;
 
-use Interop\Container\ContainerInterface;
 use RecursiveIteratorIterator;
-use Zend\EventManager\EventManagerInterface;
-use Zend\I18n\Translator\TranslatorInterface as Translator;
 use Zend\Navigation\AbstractContainer;
-use Zend\Navigation\Page\AbstractPage;
-use Zend\Permissions\Acl;
-use Zend\View\Exception;
 
 use Zend\View\Helper\Navigation\Menu;
-use Zend\View\Renderer\RendererInterface as Renderer;
 
 class FoundationMenuHelper extends Menu
 {

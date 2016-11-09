@@ -8,13 +8,9 @@
 
 namespace Ainias\Core\Model\Doctrine;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
-use Exception;
-use ReflectionClass;
 
 class DatabaseListener implements EventSubscriber
 {

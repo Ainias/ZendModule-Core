@@ -34,7 +34,7 @@ class ArrayList implements \ArrayAccess, \Countable, \IteratorAggregate
 
 	public function offsetGet($offset)
 	{
-		return $this->offsetExists($offset) ? $this->data[$offset] : null;
+		return $this->offsetExists($offset) ? $this->list[$offset] : null;
 	}
 
 	public function offsetSet($offset, $value)

@@ -5,24 +5,21 @@ namespace Ainias\Core;
 use Ainias\Core\Connections\MyConnection;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 
-$lastNamespacePart = explode("\\", __NAMESPACE__)[1];
 return array(
     'doctrine' => array(
         'connection' => array(
-            $lastNamespacePart => array(
+            'default' => array(
                 'wrapperClass' => MyConnection::class,
-                'params' => array(
-                    'dbname' => 'silas',
-                )
+                'params' => [],
             )
         ),
         'driver' => array(
             'orm_default' => array(
                 'drivers' => array(
-                    __NAMESPACE__.'\Model' => 'entities_'.$lastNamespacePart,
+                    __NAMESPACE__.'\Model' => 'entities_default',
                 ),
             ),
-            'entities_'.$lastNamespacePart => array(
+            'entities_default' => array(
                 'class' => AnnotationDriver::class,
                 'cache' => 'array',
                 'paths' => array(
@@ -31,11 +28,8 @@ return array(
             )
         ),
         'entitymanager' => array(
-            $lastNamespacePart => array(
-                'connection' => $lastNamespacePart,
-            ),
             'orm_default' => [
-                'connection' => $lastNamespacePart,
+                'connection' => 'default',
             ],
         ),
     ),

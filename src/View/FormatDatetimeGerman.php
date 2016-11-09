@@ -20,80 +20,99 @@ class FormatDatetimeGerman extends AbstractHelper
 
     public function __invoke(\DateTime $dateTime = null, $format = self::FORMAT_GERMAN_DATE_SHORT)
     {
-        if ($dateTime == null)
-        {
+        if ($dateTime == null) {
             return $this;
         }
         return date($format, $dateTime->getTimestamp());
     }
 
-    public function dateLong(\DateTime $dateTime, $fillerWeekday = "der")
+    private function getRelativeTime(\DateTime $dateTime)
     {
-        return $this->getGermanDayOfWeek($dateTime, true)
-            .", ".$fillerWeekday." ".$dateTime->format("d").". "
-            . $this->getGermanMonthName($dateTime, true). " "
-            . $dateTime->format("Y");
+        $nowDateTime = new \DateTime();
+        $now = $nowDateTime->format("Y-m-d");
+        $yesterday = $nowDateTime->modify("-1 Day")->format("Y-m-d");
+        $tomorrow = $nowDateTime->modify("+1 Day")->format("Y-m-d");
+
+        switch ($dateTime->format("Y-m-d")) {
+            case $now: {
+                return "Heute";
+            }
+            case $yesterday: {
+                return "Gestern";
+            }
+            case $tomorrow: {
+                return "Morgen";
+            }
+        }
+        return null;
     }
 
-    public function dateMiddle(\DateTime $dateTime)
+    public function dateLong(\DateTime $dateTime, $fillerWeekday = "der", $useRelative = true)
     {
+        if ($useRelative) {
+            $date = $this->getRelativeTime($dateTime);
+            if ($date != null) {
+                return $date;
+            }
+        }
+        return $this->getGermanDayOfWeek($dateTime, true)
+        . ", " . $fillerWeekday . " " . $dateTime->format("d") . ". "
+        . $this->getGermanMonthName($dateTime, true) . " "
+        . $dateTime->format("Y");
+    }
+
+    public function dateMiddle(\DateTime $dateTime, $useRelative = true)
+    {
+        if ($useRelative) {
+            $date = $this->getRelativeTime($dateTime);
+            if ($date != null) {
+                return $date;
+            }
+        }
         return $this->getGermanDayOfWeek($dateTime)
-        .", ".$dateTime->format("d").". "
-        . $this->getGermanMonthName($dateTime). ". "
+        . ", " . $dateTime->format("d") . ". "
+        . $this->getGermanMonthName($dateTime) . ". "
         . $dateTime->format("Y");
     }
 
     public function getGermanMonthName(\DateTime $dateTime, $long = false)
     {
-        switch ($dateTime->format("n"))
-        {
-            case 1:
-            {
-                return ($long)?"Januar":"Jan";
+        switch ($dateTime->format("n")) {
+            case 1: {
+                return ($long) ? "Januar" : "Jan";
             }
-            case 2:
-            {
-                return ($long)?"Februar":"Feb";
+            case 2: {
+                return ($long) ? "Februar" : "Feb";
             }
-            case 3:
-            {
-                return ($long)?"März":"Mrz";
+            case 3: {
+                return ($long) ? "März" : "Mrz";
             }
-            case 4:
-            {
-                return ($long)?"April":"Apr";
+            case 4: {
+                return ($long) ? "April" : "Apr";
             }
-            case 5:
-            {
-                return ($long)?"Mai":"Mai";
+            case 5: {
+                return ($long) ? "Mai" : "Mai";
             }
-            case 6:
-            {
-                return ($long)?"Juni":"Jun";
+            case 6: {
+                return ($long) ? "Juni" : "Jun";
             }
-            case 7:
-            {
-                return ($long)?"Juli":"Jul";
+            case 7: {
+                return ($long) ? "Juli" : "Jul";
             }
-            case 8:
-            {
-                return ($long)?"August":"Aug";
+            case 8: {
+                return ($long) ? "August" : "Aug";
             }
-            case 9:
-            {
-                return ($long)?"September":"Sep";
+            case 9: {
+                return ($long) ? "September" : "Sep";
             }
-            case 10:
-            {
-                return ($long)?"Oktober":"Okt";
+            case 10: {
+                return ($long) ? "Oktober" : "Okt";
             }
-            case 11:
-            {
-                return ($long)?"November":"Nov";
+            case 11: {
+                return ($long) ? "November" : "Nov";
             }
-            case 12:
-            {
-                return ($long)?"Dezember":"Dez";
+            case 12: {
+                return ($long) ? "Dezember" : "Dez";
             }
         }
         return "";
@@ -101,35 +120,27 @@ class FormatDatetimeGerman extends AbstractHelper
 
     public function getGermanDayOfWeek(\DateTime $dateTime, $long = false)
     {
-        switch ($dateTime->format("w"))
-        {
-            case 0:
-            {
-                return ($long)?"Sonntag":"So";
+        switch ($dateTime->format("w")) {
+            case 0: {
+                return ($long) ? "Sonntag" : "So";
             }
-            case 1:
-            {
-                return ($long)?"Montag":"Mo";
+            case 1: {
+                return ($long) ? "Montag" : "Mo";
             }
-            case 2:
-            {
-                return ($long)?"Dienstag":"Di";
+            case 2: {
+                return ($long) ? "Dienstag" : "Di";
             }
-            case 3:
-            {
-                return ($long)?"Mittwoch":"Mi";
+            case 3: {
+                return ($long) ? "Mittwoch" : "Mi";
             }
-            case 4:
-            {
-                return ($long)?"Donnerstag":"Do";
+            case 4: {
+                return ($long) ? "Donnerstag" : "Do";
             }
-            case 5:
-            {
-                return ($long)?"Freitag":"Fr";
+            case 5: {
+                return ($long) ? "Freitag" : "Fr";
             }
-            case 6:
-            {
-                return ($long)?"Samstag":"Sa";
+            case 6: {
+                return ($long) ? "Samstag" : "Sa";
             }
         }
         return "";

@@ -20,14 +20,13 @@
     "zendframework/zend-mvc-console": "^1.1",
     "zendframework/zend-form": "^2.9",
 
-    "ainias/doctrine-orm-module": "*",
-    "ainias/doctrine-module": "*",
     "zendframework/zend-mime": "^2.6",
     "zendframework/zend-mail": "^2.7",
     "zendframework/zend-log": "^2.9",
     "zendframework/zend-permissions-acl": "^2.6",
-    "zendframework/zend-i18n": "^2.7"
-
+    "zendframework/zend-i18n": "^2.7",
+    "doctrine/doctrine-module": "^1.2",
+    "doctrine/doctrine-orm-module": "^1.1"
   },
   "require-dev": {
   },
@@ -37,13 +36,5 @@
     }
   },
   "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/Ainias/doctrineZF3"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/Ainias/doctrineORMModule"
-    }
   ]
 }

@@ -17,6 +17,8 @@ use Zend\Session\SessionManager;
 
 class Module
 {
+    const EVENT_LOG = "log";
+
     public function onBootstrap(MvcEvent $e)
     {
         $db = "silas";

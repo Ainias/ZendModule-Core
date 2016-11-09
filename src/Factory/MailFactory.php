@@ -6,9 +6,7 @@ use Ainias\Core\Model\SmtpMail;
 use Interop\Container\ContainerInterface;
 use Zend\Http\Request;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Helper\BasePath;
-use Zend\View\Helper\Url;
 
 class MailFactory implements FactoryInterface
 {
