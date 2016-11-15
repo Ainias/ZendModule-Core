@@ -7,7 +7,6 @@
 
 namespace Ainias\Core;
 
-use Ainias\Core\Connections\MyConnection;
 use Ainias\Core\Model\Doctrine\DatabaseListener;
 use Doctrine\ORM\EntityManager;
 use Zend\Http\Request;
@@ -21,13 +20,12 @@ class Module
 
     public function onBootstrap(MvcEvent $e)
     {
-        $db = "silas";
+        $db = "";
         $useStrict = false;
         $serviceLocator = $e->getApplication()->getServiceManager();
         $config = $serviceLocator->get('config');
-        if (is_array($config) && isset($config["dbDefault"])) {
-            $dbConfig = $config["dbDefault"];
-            MyConnection::setDefaults($dbConfig);
+        if (is_array($config) && isset($config["doctrine"]) ) {
+            $dbConfig = $config["doctrine"]["connection"]["default"]["params"];
             $db = $dbConfig["dbname"];
             $useStrict = (isset($dbConfig["useStrict"]))?$dbConfig["useStrict"]:false;
         }
