@@ -7,12 +7,12 @@ use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 
 return array(
     'doctrine' => array(
-        'connection' => array(
-            'default' => array(
-                'wrapperClass' => MyConnection::class,
-                'params' => [],
-            )
-        ),
+//        'connection' => array(
+//            'default' => array(
+//                'wrapperClass' => MyConnection::class,
+//                'params' => [],
+//            )
+//        ),
         'driver' => array(
             'orm_default' => array(
                 'drivers' => array(
