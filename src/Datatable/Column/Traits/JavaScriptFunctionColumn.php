@@ -17,6 +17,7 @@ trait JavaScriptFunctionColumn
     {
         $this->javaScriptFunctionName = NULL;
         $this->addClass("clickable");
+        $options["imgClass"] = "clickable";
         parent::__construct($name, $options);
     }
 
