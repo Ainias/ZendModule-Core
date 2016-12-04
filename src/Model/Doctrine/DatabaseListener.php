@@ -48,6 +48,10 @@ class DatabaseListener implements EventSubscriber
                     $dbName = $this->prefix. '_' . $dbName;
                 }
                 $event->getClassMetadata()->table["schema"] = $dbName;
+                foreach ($event->getClassMetadata()->associationMappings as &$mapping)
+                {
+                    $mapping["joinTable"]["schema"] = $dbName;
+                }
             }
         }
     }
