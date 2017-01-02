@@ -32,6 +32,8 @@ class SmtpMail
 
     private $systemVariables;
 
+    private $footer;
+
     public function __construct($smtpOptions, $sender, $systemVariables, $serverUrl)
     {
         $this->smtpOptions = $smtpOptions;
@@ -48,6 +50,8 @@ class SmtpMail
         $this->systemVariables = $systemVariables;
 
         $this->filesFromStrings = array();
+
+        $this->footer = "";
     }
     /**
      * @return boolean
@@ -212,9 +216,26 @@ class SmtpMail
             $this->filesFromStrings[] = $fileFromString;
         }
     }
+
+    public function prependToFooter($footerAppend)
+    {
+        $this->footer = $footerAppend.$this->footer;
+    }
+
+    public function appendToFooter($footerAppend)
+    {
+        $this->footer .= $footerAppend;
+    }
+
     public function send()
     {
         $emailValidator = new EmailAddress(Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL); //TODO ALLOW_LOCAL entfernen
+
+        if (!$this->allowReply) {
+            $this->footer .= "
+                <p><i>De Nachricht wurde automatisch von <a href = '" . $this->serverUrl . "'>".$this->systemVariables["websiteName"]."</a> erzeugt. Bitte antworten Sie nicht auf diese Email</i></p>
+                    ";
+        }
 
         if ($emailValidator->isValid($this->senderEmail) && $emailValidator->isValid($this->empfaengerEmail)) {
             $message = "
@@ -231,13 +252,9 @@ class SmtpMail
                 <br/>
                 <p>$this->nachricht</p>
     ";
-            if (!$this->allowReply) {
-                $message .= "
-                <br/>
-                <br/>
-                <hr/>
-                <p><i>De Nachricht wurde automatisch von <a href = '" . $this->serverUrl . "'>".$this->systemVariables["websiteName"]."</a> erzeugt. Bitte antworten Sie nicht auf diese Email</i></p>
-                    ";
+            if ($this->footer != "")
+            {
+                $message .= "<br/><br/><br/><hr>".$this->footer;
             }
             $message .= "
             </span>
