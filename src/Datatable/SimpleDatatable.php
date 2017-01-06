@@ -12,9 +12,9 @@ class SimpleDatatable extends Datatable
 {
     public function __construct($id, array $options = array())
     {
+        parent::__construct($id, $options);
         $this->setPaginate(false);
         $this->setSortable(false);
-        parent::__construct($id, $options);
     }
 
     protected function buildJsInitObject()
