@@ -46,9 +46,10 @@ class DatatablesHelper extends AbstractHelper
 
 	private function appendScriptFiles()
 	{
-		$this->getView()->inlineScript()->appendFile($this->getView()->basePath() . '/3rdParty/Datatable/datatables.min.js');
-		$this->getView()->inlineScript()->appendFile($this->getView()->basePath() . '/js/myDatatable.js');
-		$this->getView()->headLink()->appendStylesheet($this->getView()->basePath() . "/3rdParty/Datatable/datatables.min.css");
-		$this->getView()->headLink()->appendStylesheet($this->getView()->basePath() . "/css/datatable.css");
+		$this->getView()->inlineScript()->appendFile($this->getView()->basePath('/3rdParty/Datatable/datatables.min.js'));
+		$this->getView()->inlineScript()->appendFile($this->getView()->basePath("3rdParty/Datatable/RowReorder-1.1.2/js/dataTables.rowReorder.min.js"));
+		$this->getView()->inlineScript()->appendFile($this->getView()->basePath('/js/myDatatable.js'));
+		$this->getView()->headLink()->appendStylesheet($this->getView()->basePath("/3rdParty/Datatable/datatables.min.css"));
+		$this->getView()->headLink()->appendStylesheet($this->getView()->basePath("/css/datatable.css"));
 	}
 }
