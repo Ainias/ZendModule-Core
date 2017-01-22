@@ -14,6 +14,7 @@ use Zend\View\Helper\AbstractHelper;
 
 class DatatablesHelper extends AbstractHelper
 {
+
 	public function __invoke($datatable = null)
 	{
 	    if ($datatable == null)
