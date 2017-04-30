@@ -6,7 +6,7 @@
  * Time: 12:54
  */
 
-namespace Application\Controller;
+namespace Ainias\Core\Controller;
 
 use Ainias\Core\Controller\ServiceActionController;
 use Zend\Mvc\MvcEvent;
