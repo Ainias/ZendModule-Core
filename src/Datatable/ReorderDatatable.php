@@ -13,28 +13,57 @@ class ReorderDatatable extends Datatable
 {
 	private $reorderRouteName;
 	private $reorderRouteParams;
-	private $requestType;
+	/** @var  boolean */
+	private $usePositionColumns;
 
 	public function __construct($id, $options = array())
 	{
 		$this->setReorderRouteName("");
 		$this->setReorderRouteParams(array());
-		$this->setRequestType("POST");
 
 		parent::__construct($id, $options);
 		$this->setSortable(false);
 	}
 
-	protected function buildJsAdditionalFunctions()
+    protected function buildJsInitObject()
+    {
+       $initObject = parent::buildJsInitObject();
+       if ($this->usePositionColumns)
+       {
+           $initObject .= <<<JS
+        dataTableInitObject.rowReorder = true;
+JS;
+       }
+       else
+       {
+           $initObject .= <<<JS
+        dataTableInitObject.rowReorder = {
+            selector: 'tr'    
+        };
+JS;
+       }
+
+       return $initObject;
+    }
+
+
+    protected function buildJsAdditionalFunctions()
 	{
 		$id = $this->getId();
 		$url = $this->phpRenderer->url($this->getReorderRouteName(), $this->getReorderRouteParams());
-		$requestType = $this->getRequestType();
 
 		$script = <<<JS
-	$("#$id").rowReordering({
-		sURL: "$url",
-		sRequestType: "$requestType"
+	$("#$id").DataTable().on('row-reorder', function(event, diff, edit){
+	    var changes = [];
+	    $(diff).each(function(index){
+	        changes[index] = {
+	            newData: this.newData,
+	            oldData: this.oldData,
+	            newPosition: this.newPosition,
+	            oldPosition: this.oldPosition
+	        }
+	    });
+		$.post("$url", {newPositions: changes});
 	});
 JS;
 		return $script;
@@ -50,10 +79,6 @@ JS;
 		if (isset($options["reorderRouteParams"]))
 		{
 			$this->setReorderRouteParams($options["reorderRouteParams"]);
-		}
-		if (isset($options["requesetType"]))
-		{
-			$this->setRequestType($options["reorderUrl"]);
 		}
 		parent::setOptions($options);
 	}
@@ -90,22 +115,19 @@ JS;
 		$this->reorderRouteParams = $reorderRouteParams;
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getRequestType()
-	{
-		return $this->requestType;
-	}
+    /**
+     * @return bool
+     */
+    public function isUsePositionColumns()
+    {
+        return $this->usePositionColumns;
+    }
 
-	/**
-	 * @param mixed $requestType
-	 */
-	public function setRequestType($requestType)
-	{
-		$this->requestType = $requestType;
-	}
-
-
-
+    /**
+     * @param bool $usePositionColumns
+     */
+    public function setUsePositionColumns($usePositionColumns)
+    {
+        $this->usePositionColumns = $usePositionColumns;
+    }
 } 

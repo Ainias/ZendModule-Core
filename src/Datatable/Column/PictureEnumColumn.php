@@ -27,7 +27,7 @@ class PictureEnumColumn extends EnumColumn
     {
         parent::setOptions($options);
         isset($options["renderFunction"]) && $this->setRenderFunction($options["renderFunction"]);
-        isset($options["imgClass"]) && $this->setRenderFunction($options["imgClass"]);
+        isset($options["imgClass"]) && $this->setImgClass($options["imgClass"]);
     }
 
 

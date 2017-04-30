@@ -14,8 +14,13 @@ use Zend\View\Helper\AbstractHelper;
 
 class DatatablesHelper extends AbstractHelper
 {
-	public function __invoke(Datatable $datatable)
+	public function __invoke($datatable = null)
 	{
+	    if ($datatable == null)
+        {
+            return $this;
+        }
+
 		$this->prepareData($datatable);
 		$this->appendScriptFiles();
 
@@ -44,11 +49,11 @@ class DatatablesHelper extends AbstractHelper
 		$datatable->setContent($content);
 	}
 
-	private function appendScriptFiles()
+	public function appendScriptFiles()
 	{
-		$this->getView()->inlineScript()->appendFile($this->getView()->basePath() . '/3rdParty/Datatable/datatables.min.js');
-		$this->getView()->inlineScript()->appendFile($this->getView()->basePath() . '/js/myDatatable.js');
-		$this->getView()->headLink()->appendStylesheet($this->getView()->basePath() . "/3rdParty/Datatable/datatables.min.css");
-		$this->getView()->headLink()->appendStylesheet($this->getView()->basePath() . "/css/datatable.css");
+		$this->getView()->inlineScript()->appendFile($this->getView()->basePath('/3rdParty/Datatable/datatables.min.js'));
+		$this->getView()->inlineScript()->appendFile($this->getView()->basePath('/js/myDatatable.js'));
+		$this->getView()->headLink()->appendStylesheet($this->getView()->basePath("/3rdParty/Datatable/datatables.min.css"));
+		$this->getView()->headLink()->appendStylesheet($this->getView()->basePath("/css/datatable.css"));
 	}
 }

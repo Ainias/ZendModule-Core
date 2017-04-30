@@ -7,6 +7,7 @@ use Ainias\Core\View\DatatablesHelper;
 use Ainias\Core\View\Form\FormElementErrors;
 use Ainias\Core\View\Form\FoundationFormHelper;
 use Ainias\Core\View\FormatDatetimeGerman;
+use Ainias\Core\View\MyEscapeHelper;
 use Ainias\Core\View\NoJs;
 use Ainias\Core\View\NoTag;
 use Ainias\Core\View\PriceFormatter;
@@ -22,9 +23,11 @@ return array(
             'navigation' => FoundationMenuHelperFactory::class,
             FormatDatetimeGerman::class => InvokableFactory::class,
             PriceFormatter::class => InvokableFactory::class,
+            MyEscapeHelper::class => InvokableFactory::class,
 
         ),
         'aliases' => [
+            'helpEscape' => MyEscapeHelper::class,
             'noJs' => NoJs::class,
             'noTag' => NoTag::class,
             'datatable' => DatatablesHelper::class,

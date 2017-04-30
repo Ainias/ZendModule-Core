@@ -148,7 +148,7 @@ JS;
         return $script;
     }
 
-    private function buildJsColumns()
+    protected function buildJsColumns()
     {
         $script = "";
         $arrayColumns = $this->buildJsColumnArray();
@@ -158,7 +158,7 @@ JS;
         return substr($script, strlen("," . PHP_EOL));
     }
 
-    private function buildJsColumn(array $arrayColumn)
+    protected function buildJsColumn(array $arrayColumn)
     {
         $script = "";
         foreach ($arrayColumn as $key => $value) {
@@ -167,7 +167,7 @@ JS;
         return substr($script, strlen("," . PHP_EOL));
     }
 
-    private function buildJsColumnArray()
+    protected function buildJsColumnArray()
     {
         $arrayColumns = array();
         /** @var Column $column */
@@ -182,7 +182,7 @@ JS;
         return $arrayColumns;
     }
 
-    private function buildJsInitObject()
+    protected function buildJsInitObject()
     {
         $pageLength = $this->getPageLength();
         $lengthMenu = $this->getLengthMenu();
@@ -254,7 +254,7 @@ JS;
         return $table;
     }
 
-    private function buildFoot()
+    protected function buildFoot()
     {
         if (!$this->isHideTablefoot()) {
             $tableFood = "<tfoot><tr id = '" . $this->getId() . "_foot'>";
@@ -270,7 +270,7 @@ JS;
         return "";
     }
 
-    private function buildHead()
+    protected function buildHead()
     {
         if (!$this->isHideTablehead()) {
             $tableHead = "<thead><tr id = '" . $this->getId() . "_head'>";
@@ -286,7 +286,7 @@ JS;
         return "";
     }
 
-    private function buildBody()
+    protected function buildBody()
     {
         $tableBody = "<tbody>";
         $countRows = count($this->content);
@@ -298,7 +298,7 @@ JS;
         return $tableBody;
     }
 
-    private function buildRow($index)
+    protected function buildRow($index)
     {
         $row = "<tr id = '" . $this->getId() . "_" . $index . "'>";
         /** @var Column $column */
