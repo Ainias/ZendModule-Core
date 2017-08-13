@@ -32,6 +32,11 @@ class StandardManager
 		return $this->entity;
 	}
 
+	public function clear()
+    {
+        $this->repository->clear();
+    }
+
 	/**
 	 * @param mixed $entity
 	 */
@@ -152,9 +157,9 @@ class StandardManager
         $this->repository->merge($entity, $flush);
     }
 
-    public function emFlush($entity = NULL)
+    public function emFlush($entity = NULL, $clear = false)
     {
-        $this->repository->emFlush($entity);
+        $this->repository->emFlush($entity, $clear);
     }
 
 	public function removeEntity($entity = null, $flush = true)

@@ -40,9 +40,13 @@ class StandardRepository extends EntityRepository
 			$this->_em->flush();
 		}
 	}
-    public function emFlush($entity = NULL)
+    public function emFlush($entity = NULL, $clear = false)
     {
         $this->_em->flush($entity);
+        if ($clear)
+        {
+            $this->clear();
+        }
     }
 
     public function getMetadata()
